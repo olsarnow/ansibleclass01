@@ -2,11 +2,14 @@
 - hosts: webserver
   become: true
   tasks:
+    - name: install epel
+      yum: name=epel-release state=present update_cache=yes
+
     - name: install apache
-    yum: name=httpd state=present update_cache=yes
-    with_items:
-      - httpd
-      - mod_wsgi
-      - sip
-      - pip
-    pip: name=virtualenv state=present
+      yum: name={{ item }} state=present update_cache=yes
+      with_items:
+        - httpd
+        - mod_wsgi
+        - sip
+        - python-pip
+        - python-virtualenv
