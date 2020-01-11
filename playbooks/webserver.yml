@@ -1,0 +1,12 @@
+---
+- hosts: webserver
+  become: true
+  tasks:
+    - name: install apache
+    yum: name=httpd state=present update_cache=yes
+    with_items:
+      - httpd
+      - mod_wsgi
+      - sip
+      - pip
+    pip: name=virtualenv state=present
