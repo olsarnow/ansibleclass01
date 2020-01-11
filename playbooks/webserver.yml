@@ -2,10 +2,13 @@
 - hosts: webserver
   become: true
   tasks:
+    
     - name: install epel
-      yum: name=epel-release state=present update_cache=yes
+      yum: name={{ item }} state=present update_cache=yes
+      with_items:
+        - epel-release
 
-    - name: install apache
+    - name: install web components
       yum: name={{ item }} state=present update_cache=yes
       with_items:
         - httpd
