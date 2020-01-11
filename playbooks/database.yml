@@ -1,0 +1,5 @@
+---
+- hosts: database
+  tasks:
+    - name: install mysql
+      yum: name=mariadb-server state=present update_cache=yes
