@@ -1,12 +1,12 @@
 [loadbalancer]
-157.230.249.226  ansible_ssh_user=root
+157.245.55.232  ansible_ssh_user=root
 
 [webserver]
-159.65.10.111  ansible_ssh_user=root
-167.71.201.191  ansible_ssh_user=root
+157.245.63.32  ansible_ssh_user=root
+178.128.116.74  ansible_ssh_user=root
 
 [database]
-134.209.108.150  ansible_ssh_user=root
+157.245.63.8  ansible_ssh_user=root
 
 [control]
 heihei ansible_connection=local
