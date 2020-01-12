@@ -20,6 +20,25 @@
     - name: ensure apache is started
       service: name=httpd state=started enabled=yes
 
+    - name: copy httpd.conf
+      copy: src=../files/httpd.conf dest=/etc/httpd/conf/ mode=0755
+      notify: restart apache
+
+    - name: copy virtual host conf
+      copy: src=../files/apache-vhost.conf dest=/etc/httpd/sites-available/ mode=0755
+      notify: restart apache
+
+    - name: create sites-enabled
+      file:
+        path: /etc/httpd/sites-enabled
+        state: directory
+        mode: '0755'
+      notify: restart apache
+
+    - name: add virtualhost
+      file: src=/etc/httpd/sites-available/apache-vhost.conf dest=/etc/httpd/sites-enabled/apache-vhost.conf state=link
+      notify: restart apache
+
     - name: ensure mod_wsgi enabled
       apache2_module: name=wsgi state=present
       notify: restart apache
@@ -28,8 +47,8 @@
       copy: src=../demo/app/ dest=/var/www/demo mode=0755
       notify: restart apache
 
-    - name: copy virtual host conf
-      copy: src=../files/apache-vhost.conf dest=/etc/apache2/sites-available/ mode=0755
+    - name: setup virtualenv
+      pip: requirements=/var/www/demo/requirements.txt virtualenv=/var/www/demo/.venv
       notify: restart apache
 
   handlers:
